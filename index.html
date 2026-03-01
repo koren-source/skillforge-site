@@ -127,31 +127,44 @@ memory:
     <div id="quickstart-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
       <div class="modal-card">
         <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
-        <p class="eyebrow">3 steps. Under 60 seconds.</p>
+        <p class="eyebrow">4 steps. Under 60 seconds.</p>
         <h2 id="modal-title">Get your agent learning right now</h2>
         <ol class="quickstart-steps">
           <li>
+            <span class="step-label">Install yt-dlp (transcript engine)</span>
+            <div class="code-block">
+              <code>brew install yt-dlp</code>
+              <button class="copy-btn" onclick="copyCode(this,'brew install yt-dlp')">Copy</button>
+            </div>
+            <p class="step-hint">Linux/Windows: <em>pip install yt-dlp</em></p>
+          </li>
+          <li>
             <span class="step-label">Install SkillForge</span>
             <div class="code-block">
-              <code>npm install -g skillforge-ai</code>
-              <button class="copy-btn" onclick="copyCode(this,'npm install -g skillforge-ai')">Copy</button>
+              <code>npm install -g skillforge</code>
+              <button class="copy-btn" onclick="copyCode(this,'npm install -g skillforge')">Copy</button>
             </div>
+            <p class="step-hint">Also set <em>ANTHROPIC_API_KEY</em> or <em>OPENAI_API_KEY</em> in your environment.</p>
           </li>
           <li>
-            <span class="step-label">Point it at a YouTube channel</span>
+            <span class="step-label">Scan a channel — get a proposal</span>
             <div class="code-block">
-              <code>skillforge scan @channelname --intent "what you want to learn"</code>
-              <button class="copy-btn" onclick="copyCode(this,'skillforge scan @channelname --intent &quot;what you want to learn&quot;')">Copy</button>
+              <code>skillforge scan https://youtube.com/@channelname --intent "what you want to learn"</code>
+              <button class="copy-btn" onclick="copyCode(this,'skillforge scan https://youtube.com/@channelname --intent &quot;what you want to learn&quot;')">Copy</button>
             </div>
-            <p class="step-hint">Try: <em>skillforge scan @alexhormozi --intent "build a sales funnel"</em></p>
+            <p class="step-hint">Example: <em>skillforge scan https://youtube.com/@alexhormozi --intent "build a sales funnel"</em></p>
           </li>
           <li>
-            <span class="step-label">Approve &amp; your agent has the skill</span>
-            <p class="step-desc">SkillForge proposes the best videos to pull and what to build. One approval — your agent gets a ready-to-use <code>SKILL.md</code> in memory. Permanently.</p>
+            <span class="step-label">Build the skill from your proposal</span>
+            <div class="code-block">
+              <code>skillforge build --proposal &lt;proposal-id&gt;</code>
+              <button class="copy-btn" onclick="copyCode(this,'skillforge build --proposal &lt;proposal-id&gt;')">Copy</button>
+            </div>
+            <p class="step-desc">The proposal ID prints after <code>scan</code> completes. One command — your agent gets a ready-to-use <code>SKILL.md</code> in memory. Permanently.</p>
           </li>
         </ol>
         <div class="modal-actions">
-          <a class="button button-primary" href="https://github.com" target="_blank" rel="noreferrer">Full docs on GitHub →</a>
+          <a class="button button-primary" href="https://github.com/koren-source/skillforge" target="_blank" rel="noreferrer">Full docs on GitHub →</a>
         </div>
       </div>
     </div>
