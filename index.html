@@ -4,11 +4,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SkillForge | YouTube Research Engine for Agents</title>
-    <meta
-      name="description"
-      content="SkillForge turns YouTube channels into ready-to-use agent skills. Drop a channel plus your intent. Get back a reusable skill your agent can use immediately."
-    />
+    <meta name="description" content="SkillForge turns YouTube channels into ready-to-use agent skills." />
     <link rel="stylesheet" href="styles.css" />
+    <style>
+      .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:1000; align-items:center; justify-content:center; padding:1rem; }
+      .modal-overlay.open { display:flex; }
+      .modal-card { background:#0e1117; border:1px solid #2a2d35; border-radius:16px; padding:2.5rem; max-width:560px; width:100%; position:relative; }
+      .modal-close { position:absolute; top:1rem; right:1rem; background:none; border:none; color:#888; font-size:1.2rem; cursor:pointer; padding:0.25rem 0.5rem; }
+      .modal-close:hover { color:#fff; }
+      .modal-card h2 { font-size:1.6rem; margin:0.5rem 0 1.5rem; }
+      .quickstart-steps { list-style:none; padding:0; margin:0 0 2rem; display:flex; flex-direction:column; gap:1.5rem; counter-reset:steps; }
+      .quickstart-steps li { counter-increment:steps; }
+      .step-label { display:flex; align-items:center; gap:0.5rem; font-size:0.78rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#4ade80; margin-bottom:0.5rem; }
+      .step-label::before { content:counter(steps); display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; border-radius:50%; background:#4ade80; color:#000; font-size:0.7rem; font-weight:800; flex-shrink:0; }
+      .code-block { display:flex; align-items:center; gap:0.5rem; background:#1a1d24; border:1px solid #2a2d35; border-radius:8px; padding:0.65rem 1rem; margin-bottom:0.4rem; }
+      .code-block code { font-family:'Courier New',monospace; font-size:0.82rem; color:#e2e8f0; flex:1; word-break:break-all; }
+      .copy-btn { background:#2a2d35; border:none; color:#aaa; font-size:0.72rem; padding:0.25rem 0.6rem; border-radius:4px; cursor:pointer; white-space:nowrap; flex-shrink:0; transition:all 0.15s; }
+      .copy-btn:hover { background:#4ade80; color:#000; }
+      .step-hint { font-size:0.8rem; color:#666; margin:0; }
+      .step-hint em { color:#4ade80; font-style:normal; }
+      .step-desc { font-size:0.88rem; color:#aaa; margin:0; line-height:1.6; }
+      .step-desc code { background:#1a1d24; padding:0.1em 0.3em; border-radius:3px; font-size:0.85em; }
+      .modal-actions { display:flex; justify-content:center; }
+    </style>
   </head>
   <body>
     <div class="page-shell">
@@ -19,46 +37,28 @@
           <a href="https://github.com" target="_blank" rel="noreferrer">GitHub</a>
           <a href="https://clawhub.ai" target="_blank" rel="noreferrer">ClaWHub</a>
         </nav>
-        <a class="button button-primary header-cta" href="#footer-cta">Get Started</a>
+        <button class="button button-primary header-cta" onclick="openModal()">Get Started</button>
       </header>
 
       <main id="top">
         <section class="hero">
           <div class="hero-copy">
             <p class="badge">YouTube Research Engine for Agents</p>
-            <h1>
-              Give me a channel.
-              <span>I learn everything.</span>
-              <span>You get the skill.</span>
-            </h1>
-            <p class="hero-text">
-              SkillForge watches YouTube so your AI agent does not have to. Drop a
-              channel plus your intent. Get back a ready-to-use agent skill.
-            </p>
+            <h1>Give me a channel.<span>I learn everything.</span><span>You get the skill.</span></h1>
+            <p class="hero-text">SkillForge watches YouTube so your AI agent does not have to. Drop a channel plus your intent. Get back a ready-to-use agent skill.</p>
             <div class="hero-actions">
-              <a class="button button-primary" href="#footer-cta">Get Started</a>
-              <a class="button button-secondary" href="https://github.com" target="_blank" rel="noreferrer"
-                >View on GitHub</a
-              >
+              <button class="button button-primary" onclick="openModal()">Get Started</button>
+              <a class="button button-secondary" href="https://github.com" target="_blank" rel="noreferrer">View on GitHub</a>
             </div>
-            <p class="trust-line">
-              Built by Koren Saida at <a href="https://cutbox.ai" target="_blank" rel="noreferrer">Cutbox.ai</a>
-              <span aria-hidden="true">·</span> Open source
-              <span aria-hidden="true">·</span> MIT License
-            </p>
+            <p class="trust-line">Built by Koren Saida at <a href="https://cutbox.ai" target="_blank" rel="noreferrer">Cutbox.ai</a> <span aria-hidden="true">·</span> Open source <span aria-hidden="true">·</span> MIT License</p>
           </div>
-
           <aside class="demo-panel" aria-label="Interactive terminal demo">
             <div class="terminal">
               <div class="terminal-topbar">
-                <span class="terminal-dot"></span>
-                <span class="terminal-dot"></span>
-                <span class="terminal-dot"></span>
+                <span class="terminal-dot"></span><span class="terminal-dot"></span><span class="terminal-dot"></span>
                 <p class="terminal-title">skillforge.live.demo</p>
               </div>
-              <div class="terminal-body">
-                <pre id="terminal-output" aria-live="polite"></pre>
-              </div>
+              <div class="terminal-body"><pre id="terminal-output" aria-live="polite"></pre></div>
             </div>
           </aside>
         </section>
@@ -69,50 +69,23 @@
             <h2>One channel in. One durable skill out.</h2>
           </div>
           <div class="steps-grid">
-            <article class="step-card">
-              <span class="step-number">01</span>
-              <h3>Drop a channel plus intent</h3>
-              <p>Pass a creator handle and the exact problem your agent needs to solve next.</p>
-            </article>
-            <article class="step-card">
-              <span class="step-number">02</span>
-              <h3>Agent scans and proposes skills</h3>
-              <p>SkillForge ranks the best videos, extracts the relevant frameworks, then suggests reusable skills.</p>
-            </article>
-            <article class="step-card">
-              <span class="step-number">03</span>
-              <h3>Skills saved to memory permanently</h3>
-              <p>Ship the approved skills straight into agent memory so future tasks start smarter.</p>
-            </article>
+            <article class="step-card"><span class="step-number">01</span><h3>Drop a channel plus intent</h3><p>Pass a creator handle and the exact problem your agent needs to solve next.</p></article>
+            <article class="step-card"><span class="step-number">02</span><h3>Agent scans and proposes skills</h3><p>SkillForge ranks the best videos, extracts the relevant frameworks, then suggests reusable skills.</p></article>
+            <article class="step-card"><span class="step-number">03</span><h3>Skills saved to memory permanently</h3><p>Ship the approved skills straight into agent memory so future tasks start smarter.</p></article>
           </div>
         </section>
 
         <section class="section">
-          <div class="section-heading">
-            <p class="eyebrow">Use cases</p>
-            <h2>Built for operators who want leverage, not more content.</h2>
-          </div>
+          <div class="section-heading"><p class="eyebrow">Use cases</p><h2>Built for operators who want leverage, not more content.</h2></div>
           <div class="card-grid">
-            <article class="feature-card">
-              <h3>Learn from any expert</h3>
-              <p>Point at any YouTube channel, extract the sharpest frameworks, and turn them into agent skills.</p>
-            </article>
-            <article class="feature-card">
-              <h3>Intent-first intelligence</h3>
-              <p>Not a dump of everything. SkillForge filters for exactly what matters to your next task.</p>
-            </article>
-            <article class="feature-card">
-              <h3>Compounds over time</h3>
-              <p>Every saved skill stacks into long-term memory, so your agent gets stronger each session.</p>
-            </article>
+            <article class="feature-card"><h3>Learn from any expert</h3><p>Point at any YouTube channel, extract the sharpest frameworks, and turn them into agent skills.</p></article>
+            <article class="feature-card"><h3>Intent-first intelligence</h3><p>Not a dump of everything. SkillForge filters for exactly what matters to your next task.</p></article>
+            <article class="feature-card"><h3>Compounds over time</h3><p>Every saved skill stacks into long-term memory, so your agent gets stronger each session.</p></article>
           </div>
         </section>
 
         <section class="section built-for-agents">
-          <div class="section-heading">
-            <p class="eyebrow">Built for agents</p>
-            <h2>Output that fits the way agent memory actually works.</h2>
-          </div>
+          <div class="section-heading"><p class="eyebrow">Built for agents</p><h2>Output that fits the way agent memory actually works.</h2></div>
           <div class="snippet-shell">
             <pre><code># SKILL.md
 name: sales-funnel-and-closing-framework
@@ -142,16 +115,62 @@ memory:
           <p class="eyebrow">Ready to teach your agent?</p>
           <h2>Turn channels into memory your stack can reuse.</h2>
           <div class="hero-actions">
-            <a class="button button-primary" href="mailto:hello@cutbox.ai">Get Started</a>
-            <a class="button button-secondary" href="https://github.com" target="_blank" rel="noreferrer"
-              >View on GitHub</a
-            >
+            <button class="button button-primary" onclick="openModal()">Get Started</button>
+            <a class="button button-secondary" href="https://github.com" target="_blank" rel="noreferrer">View on GitHub</a>
           </div>
           <p class="footer-meta">Open source MIT. Built by <a href="https://cutbox.ai" target="_blank" rel="noreferrer">Cutbox.ai</a>.</p>
         </div>
       </footer>
     </div>
 
+    <!-- Quick-start modal -->
+    <div id="quickstart-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-card">
+        <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
+        <p class="eyebrow">3 steps. Under 60 seconds.</p>
+        <h2 id="modal-title">Get your agent learning right now</h2>
+        <ol class="quickstart-steps">
+          <li>
+            <span class="step-label">Install SkillForge</span>
+            <div class="code-block">
+              <code>npm install -g skillforge-ai</code>
+              <button class="copy-btn" onclick="copyCode(this,'npm install -g skillforge-ai')">Copy</button>
+            </div>
+          </li>
+          <li>
+            <span class="step-label">Point it at a YouTube channel</span>
+            <div class="code-block">
+              <code>skillforge scan @channelname --intent "what you want to learn"</code>
+              <button class="copy-btn" onclick="copyCode(this,'skillforge scan @channelname --intent &quot;what you want to learn&quot;')">Copy</button>
+            </div>
+            <p class="step-hint">Try: <em>skillforge scan @alexhormozi --intent "build a sales funnel"</em></p>
+          </li>
+          <li>
+            <span class="step-label">Approve &amp; your agent has the skill</span>
+            <p class="step-desc">SkillForge proposes the best videos to pull and what to build. One approval — your agent gets a ready-to-use <code>SKILL.md</code> in memory. Permanently.</p>
+          </li>
+        </ol>
+        <div class="modal-actions">
+          <a class="button button-primary" href="https://github.com" target="_blank" rel="noreferrer">Full docs on GitHub →</a>
+        </div>
+      </div>
+    </div>
+
     <script src="demo.js"></script>
+    <script>
+      function openModal() { document.getElementById('quickstart-modal').classList.add('open'); }
+      function closeModal() { document.getElementById('quickstart-modal').classList.remove('open'); }
+      document.getElementById('quickstart-modal').addEventListener('click', function(e) {
+        if (e.target === this) closeModal();
+      });
+      function copyCode(btn, text) {
+        navigator.clipboard.writeText(text).then(() => {
+          const orig = btn.textContent;
+          btn.textContent = 'Copied!';
+          btn.style.cssText = 'background:#4ade80;color:#000;';
+          setTimeout(() => { btn.textContent = orig; btn.style.cssText = ''; }, 1500);
+        });
+      }
+    </script>
   </body>
 </html>
