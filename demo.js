@@ -1,7 +1,7 @@
 const terminal = document.getElementById("terminal-output");
 
 const demoLines = [
-  { text: "skillforge scan @alexhormozi --intent build a sales funnel", type: "command" },
+  { text: "skillforge scan x/@alexhormozi --intent build a sales funnel", type: "command" },
   { text: "Scanning @AlexHormozi found 847 videos", type: "output" },
   { text: "Scoring relevance against intent...", type: "output" },
   { text: "Top 6 videos selected:", type: "output" },
