@@ -29,7 +29,7 @@
 
       .creator-showcase { padding: 5rem 0; }
       .section-subtext { color: #888; font-size: 1rem; max-width: 560px; margin: 0 auto 3rem; text-align: center; line-height: 1.7; }
-      .creator-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+      .creator-grid { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 2rem; } .creator-card { max-width: 420px; width: 100%; }
       .creator-card { background: #0e1117; border: 1px solid #2a2d35; border-radius: 16px; padding: 1.75rem; }
       .creator-card-add { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border-style: dashed; min-height: 200px; }
       .creator-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; }
@@ -179,33 +179,8 @@ memory:
               </ul>
               <p class="creator-path"><code>~/.skillforge/library/@alexhormozi/</code></p>
             </div>
-            <div class="creator-card">
-              <div class="creator-header">
-                <div class="creator-avatar">SG</div>
-                <div>
-                  <p class="creator-handle">@SamovahGo</p>
-                  <p class="creator-meta">2 skills · 6 videos ingested</p>
-                </div>
-              </div>
-              <ul class="skill-list">
-                <li class="skill-item">
-                  <span class="skill-dot"></span>
-                  <span class="skill-name">ad-creative-strategy</span>
-                  <span class="skill-count">4 videos</span>
-                </li>
-                <li class="skill-item">
-                  <span class="skill-dot"></span>
-                  <span class="skill-name">paid-media-scaling-framework</span>
-                  <span class="skill-count">2 videos</span>
-                </li>
-              </ul>
-              <p class="creator-path"><code>~/.skillforge/library/@samovahgo/</code></p>
-            </div>
-            <div class="creator-card creator-card-add">
-              <div class="creator-add-icon">+</div>
-              <p class="creator-add-label">Watch any video</p>
-              <p class="creator-add-sub">New creators are added automatically when you run <code>skillforge watch</code></p>
-            </div>
+
+
           </div>
           <div class="compound-callout">
             <p>🔁 Watch a second Alex Hormozi video on sales funnels? It <strong>merges in</strong> — the skill gets sharper, nothing gets lost.</p>
