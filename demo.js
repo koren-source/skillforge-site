@@ -1,21 +1,20 @@
 const terminal = document.getElementById("terminal-output");
 
 const demoLines = [
-  { text: "skillforge scan x/@alexhormozi --intent build a sales funnel", type: "command" },
-  { text: "Scanning @AlexHormozi found 847 videos", type: "output" },
-  { text: "Scoring relevance against intent...", type: "output" },
-  { text: "Top 6 videos selected:", type: "output" },
-  { text: "- The $100M Sales System 98% match", type: "output" },
-  { text: "- How to Close Anyone 94% match", type: "output" },
-  { text: "- My Entire Funnel Explained 91% match", type: "output" },
-  { text: "- Objection Handling Masterclass 87% match", type: "output" },
-  { text: "- Cold Outreach at Scale 83% match", type: "output" },
-  { text: "- Lead Qualification Framework 79% match", type: "output" },
-  { text: "Proposed skills:", type: "output" },
-  { text: "A) Sales funnel and closing framework", type: "output" },
-  { text: "B) Cold outreach system", type: "output" },
-  { text: "C) Lead qualification playbook", type: "output" },
-  { text: "Run: skillforge build --proposal abc123 --skills A,B", type: "output" }
+  { text: "skillforge watch https://youtube.com/@alexhormozi", type: "command" },
+  { text: "Fetching transcript from @AlexHormozi...", type: "output" },
+  { text: "Creator detected: @AlexHormozi", type: "output" },
+  { text: "Proposed skill: sales-funnel-and-closing-framework", type: "output" },
+  { text: "Preview:", type: "output" },
+  { text: "  when_to_use: Drafting funnel strategy", type: "output" },
+  { text: "  frameworks: value-stack, urgency, proof", type: "output" },
+  { text: "  instructions: Lead with value-stack...", type: "output" },
+  { text: "Save to ~/.skillforge/library/@alexhormozi/? [y/N]", type: "output" },
+  { text: "y", type: "command" },
+  { text: "Saved: @alexhormozi/sales-funnel-and-closing-framework.skill.md", type: "output" },
+  { text: "skillforge recall \"sales funnel\"", type: "command" },
+  { text: "Found: @alexhormozi/sales-funnel-and-closing-framework", type: "output" },
+  { text: "Skill loaded. Your agent is ready.", type: "output" }
 ];
 
 const delays = {
